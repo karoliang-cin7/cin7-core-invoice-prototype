@@ -3029,7 +3029,7 @@ Automation                                                </a>
 
 <input type="hidden" value="{&quot;Purchase&quot;:&quot;purchase&quot;,&quot;Supplier&quot;:&quot;supplier&quot;,&quot;Sale&quot;:&quot;sale&quot;,&quot;Customer&quot;:&quot;customer&quot;,&quot;Assambly&quot;:&quot;assambly&quot;,&quot;ProductionOrder&quot;:&quot;production_order&quot;,&quot;ProductionResource&quot;:&quot;production_resource&quot;,&quot;Product&quot;:&quot;product&quot;,&quot;ProductFamily&quot;:&quot;product_family&quot;,&quot;FixedAsset&quot;:&quot;fixed_asset&quot;,&quot;MoneyTask&quot;:&quot;money_task&quot;,&quot;Journal&quot;:&quot;journal&quot;,&quot;ExpenseClaimReceipt&quot;:&quot;expense_claim_receipt&quot;,&quot;InventoryWriteOff&quot;:&quot;inventory_write_off&quot;,&quot;DocumentExtractionSale&quot;:&quot;document_extraction_sale&quot;}" id="hidJsonPageNames">
 
-<div class="GDrive_divAttachFrom page-toolbar hiddenContent">
+<div class="GDrive_divAttachFrom page-toolbar">
     <div class="gdrive-attach-block">
         <div class="btn-area">
             <img src="./Advanced sale _ Cin7 Core_files/gdrive-icon.png">
@@ -8135,7 +8135,13 @@ var _patchInterval = setInterval(function() {
         '.x-grid-empty{padding:12px 16px!important;font-size:12px!important;color:#aaa!important}' +
 
         // ── Invoice ribbon in exchange view (0.00 to invoice = fully covered) ─────
-        '#taskInvoiceRibbon.ribbon-color-success .badge{background:#d6f3e3;color:#1a7a52}';
+        '#taskInvoiceRibbon.ribbon-color-success .badge{background:#d6f3e3;color:#1a7a52}' +
+
+        // ── Google Drive attach button ─────────────────────────────────────────────
+        '.GDrive_divAttachFrom{display:block!important;padding:8px 12px 12px;border-top:1px solid #e8eaed}' +
+        '.gdrive-attach-block .btn-area{display:flex;align-items:center;gap:8px}' +
+        '.gdrive-attach-block .btn-area img{width:22px;height:22px;object-fit:contain;flex-shrink:0}' +
+        '.gdrive-attach-block .btn-area .btn{flex:1;font-size:12px;padding:5px 10px;white-space:nowrap}';
     document.head.appendChild(style);
 
     var GIF = 'data:image/gif;base64,R0lGODlhAQABAID/AMDAwAAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==';
@@ -8222,7 +8228,7 @@ var _patchInterval = setInterval(function() {
             '<span class="icons"><i class="icon19-status_invoice navigation-selected-hidden dear-green"></i></span>' +
             '<dashed class="selected-text">INV-12360</dashed></a>' +
             '<div class="menu-action invoiceAction"><i class="icon19-arrow_down nav-icon"></i></div>' +
-            '<span title="Paid" class="right"><span class="badge badge-success">28.69</span></span>' +
+            '<span title="Paid" class="right"><span class="badge badge-success">26.79&nbsp;/&nbsp;28.69</span></span>' +
             '</span>';
 
         // Sidebar: Payments
@@ -8232,7 +8238,7 @@ var _patchInterval = setInterval(function() {
         if (payRibbon) {
             payRibbon.className = '';
             payRibbon.innerHTML = '<span id="PaidTotal"><span id="PaidTotalValueLabel">paid</span> ' +
-                '<span id="PaidTotalValue" class="badge" style="background:#f0f2f4;color:#999">0.00</span></span>';
+                '<span id="PaidTotalValue" class="badge" style="background:#f0f2f4;color:#555">26.79&nbsp;/&nbsp;28.69</span></span>';
         }
         var pContent = document.querySelector('#PaymentsBlock .sidebar-content');
         if (pContent) pContent.innerHTML =
@@ -8249,9 +8255,11 @@ var _patchInterval = setInterval(function() {
             '<dashed class="selected-text">CR-00014</dashed></a>' +
             '<div class="menu-action"><i class="icon19-arrow_down nav-icon"></i></div>' +
             '<span class="right"><span class="badge badge-success">28.69</span></span></span>' +
-            '<span class="row navigation-item"><a href="javascript:;">' +
-            '<span class="icons"><i class="icon19-status_restock dear-green"></i></span>' +
-            '<dashed class="selected-text" style="padding-left:4px">Restock</dashed></a></span>';
+            '<span class="row navigation-item">' +
+            '<a href="javascript:;"><span class="icons"><i class="icon19-status_restock dear-green"></i></span>' +
+            '<dashed class="selected-text">Restock</dashed></a>' +
+            '<div class="menu-action"><i class="icon19-arrow_down nav-icon"></i></div>' +
+            '<span class="right"><span class="badge badge-success">28.69</span></span></span>';
 
         // Sidebar: Exchange — unselected, clickable
         var exchContent = document.querySelector('#ExchangesBlock .sidebar-content');
@@ -8262,7 +8270,7 @@ var _patchInterval = setInterval(function() {
             '<span class="icons"><i class="icon19-status_exchange navigation-selected-hidden dear-green"></i></span>' +
             '<dashed class="selected-text">#EX-12368-1</dashed></a>' +
             '<div class="menu-action"><i class="icon19-arrow_down nav-icon"></i></div>' +
-            '<span class="right"><span class="badge">$9.95&nbsp;/&nbsp;$9.95</span></span>' +
+            '<span class="right"><span class="badge">$10.95&nbsp;/&nbsp;$10.95</span></span>' +
             '</span>';
         var exchLink = document.getElementById('exch_link');
         if (exchLink) exchLink.onclick = function(e) { e.preventDefault(); switchTo(buildExchangeState); };
@@ -8433,9 +8441,11 @@ var _patchInterval = setInterval(function() {
             '<dashed class="selected-text">CR-00015</dashed></a>' +
             '<div class="menu-action"><i class="icon19-arrow_down nav-icon"></i></div>' +
             '<span class="right"><span class="badge badge-success">10.95</span></span></span>' +
-            '<span class="row navigation-item"><a href="javascript:;">' +
-            '<span class="icons"><i class="icon19-status_restock dear-green"></i></span>' +
-            '<dashed class="selected-text" style="padding-left:4px">Restock</dashed></a></span>';
+            '<span class="row navigation-item">' +
+            '<a href="javascript:;"><span class="icons"><i class="icon19-status_restock dear-green"></i></span>' +
+            '<dashed class="selected-text">Restock</dashed></a>' +
+            '<div class="menu-action"><i class="icon19-arrow_down nav-icon"></i></div>' +
+            '<span class="right"><span class="badge badge-success">10.95</span></span></span>';
 
         // Sidebar: Exchange — mark as selected (current page)
         var exchContent = document.querySelector('#ExchangesBlock .sidebar-content');
@@ -8446,7 +8456,7 @@ var _patchInterval = setInterval(function() {
             '<span class="icons"><i class="icon19-status_exchange dear-green"></i></span>' +
             '<dashed class="selected-text">#EX-12368-1</dashed></a>' +
             '<div class="menu-action"><i class="icon19-arrow_down nav-icon"></i></div>' +
-            '<span class="right"><span class="badge badge-success">$9.95&nbsp;/&nbsp;$9.95</span></span>' +
+            '<span class="right"><span class="badge badge-success">$10.95&nbsp;/&nbsp;$10.95</span></span>' +
             '</span>';
 
         // Invoice panel
