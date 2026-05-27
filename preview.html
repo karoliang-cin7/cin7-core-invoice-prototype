@@ -8173,6 +8173,9 @@ var _patchInterval = setInterval(function() {
         '#datefield-1238,#datefield-1239{width:100%!important}' +
         '#datefield-1238-bodyEl,#datefield-1239-bodyEl{width:100%!important}' +
         '#datefield-1238-triggerWrap,#datefield-1239-triggerWrap{width:100%!important}' +
+        // layout: collapse space-between gap, give each date 50% of their column
+        '.invoice-details .grid-col-6.date{justify-content:flex-start!important;gap:12px!important}' +
+        '.invoice-details .grid-col-6 .form-control.date:not(.hiddenContent){flex-basis:calc(50% - 6px)!important}' +
 
         // ── Fulfillment select — column-reverse so label sits below like date fields ─
         '#SaleMult_Invoice_SelectFulfillmentBlock{display:flex;flex-direction:column-reverse}' +
@@ -8193,7 +8196,8 @@ var _patchInterval = setInterval(function() {
         '#divSaleMult_Exchange_Add_Block{display:none!important}' +
 
         // ── Google Drive attach button: match width of Attach a file button ────────
-        '.GDrive_divAttachFrom{display:block!important;padding:8px 12px 12px;border-top:1px solid #e8eaed}' +
+        // page-toolbar has padding:13px 20px !important — must use !important to override
+        '.GDrive_divAttachFrom{display:block!important;padding:8px 0 12px!important;border-top:1px solid #e8eaed}' +
         '.gdrive-attach-block{width:100%}' +
         '.gdrive-attach-block .btn-area{display:flex;align-items:center;gap:8px;width:100%}' +
         '.gdrive-attach-block .btn-area img{width:22px;height:22px;object-fit:contain;flex-shrink:0}' +
