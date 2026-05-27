@@ -8125,8 +8125,11 @@ var _patchInterval = setInterval(function() {
         '#ExchangesBlock .navigation-selected dashed{font-weight:600}' +
 
         // ── Breadcrumb back-links ─────────────────────────────────────────────────
-        '#breadcrumb a[onclick]{color:inherit}' +
-        '#breadcrumb a[onclick]:hover{color:#25c99f;text-decoration:underline}' +
+        '#breadcrumb a[onclick]{color:#25c99f!important}' +
+        '#breadcrumb a[onclick]:hover{color:#1ba882!important;text-decoration:underline}' +
+
+        // ── Fulfillment select (bs-select without Bootstrap Select JS) ────────────
+        '#SaleMult_Invoice_SelectFulfillment{width:100%;height:34px;padding:6px 12px;border:1px solid #ccc;border-radius:4px;font-size:12px;color:#555;background:#fff;cursor:pointer}' +
 
         // ── Status wrapper: Draft ─────────────────────────────────────────────────
         '.status-wrapper.default{background:#f0f2f4!important;color:#707887!important}' +
@@ -8228,7 +8231,7 @@ var _patchInterval = setInterval(function() {
             '<span class="icons"><i class="icon19-status_invoice navigation-selected-hidden dear-green"></i></span>' +
             '<dashed class="selected-text">INV-12360</dashed></a>' +
             '<div class="menu-action invoiceAction"><i class="icon19-arrow_down nav-icon"></i></div>' +
-            '<span title="Paid" class="right"><span class="badge badge-success">26.79&nbsp;/&nbsp;28.69</span></span>' +
+            '<span title="Paid" class="right"><span class="badge badge-success">28.69&nbsp;/&nbsp;28.69</span></span>' +
             '</span>';
 
         // Sidebar: Payments
@@ -8238,7 +8241,7 @@ var _patchInterval = setInterval(function() {
         if (payRibbon) {
             payRibbon.className = '';
             payRibbon.innerHTML = '<span id="PaidTotal"><span id="PaidTotalValueLabel">paid</span> ' +
-                '<span id="PaidTotalValue" class="badge" style="background:#f0f2f4;color:#555">26.79&nbsp;/&nbsp;28.69</span></span>';
+                '<span id="PaidTotalValue" class="badge" style="background:#f0f2f4;color:#555">28.69&nbsp;/&nbsp;28.69</span></span>';
         }
         var pContent = document.querySelector('#PaymentsBlock .sidebar-content');
         if (pContent) pContent.innerHTML =
@@ -8259,7 +8262,11 @@ var _patchInterval = setInterval(function() {
             '<a href="javascript:;"><span class="icons"><i class="icon19-status_restock dear-green"></i></span>' +
             '<dashed class="selected-text">Restock</dashed></a>' +
             '<div class="menu-action"><i class="icon19-arrow_down nav-icon"></i></div>' +
-            '<span class="right"><span class="badge badge-success">28.69</span></span></span>';
+            '</span>';
+
+        // Fulfillment select: show Fulfillment #1 for this authorised invoice
+        var ffSel = document.getElementById('SaleMult_Invoice_SelectFulfillment');
+        if (ffSel) ffSel.innerHTML = '<option value="1" selected>Fulfillment #1</option>';
 
         // Sidebar: Exchange — unselected, clickable
         var exchContent = document.querySelector('#ExchangesBlock .sidebar-content');
@@ -8440,12 +8447,16 @@ var _patchInterval = setInterval(function() {
             '<a href="javascript:;"><span class="icons"><i class="icon19-status_invoice dear-green"></i></span>' +
             '<dashed class="selected-text">CR-00015</dashed></a>' +
             '<div class="menu-action"><i class="icon19-arrow_down nav-icon"></i></div>' +
-            '<span class="right"><span class="badge badge-success">10.95</span></span></span>' +
+            '<span class="right"><span class="badge badge-success">28.69&nbsp;/&nbsp;28.69</span></span></span>' +
             '<span class="row navigation-item">' +
             '<a href="javascript:;"><span class="icons"><i class="icon19-status_restock dear-green"></i></span>' +
             '<dashed class="selected-text">Restock</dashed></a>' +
             '<div class="menu-action"><i class="icon19-arrow_down nav-icon"></i></div>' +
-            '<span class="right"><span class="badge badge-success">10.95</span></span></span>';
+            '</span>';
+
+        // Fulfillment select: empty for draft exchange
+        var ffSel = document.getElementById('SaleMult_Invoice_SelectFulfillment');
+        if (ffSel) ffSel.innerHTML = '';
 
         // Sidebar: Exchange — mark as selected (current page)
         var exchContent = document.querySelector('#ExchangesBlock .sidebar-content');
