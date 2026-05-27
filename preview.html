@@ -8169,7 +8169,8 @@ var _patchInterval = setInterval(function() {
         // ── Sidebar links: remove browser default blue/underline ─────────────────
         '.navigation-item a{color:inherit!important;text-decoration:none!important}' +
 
-        // ── Date fields: override ExtJS inline 150px width ────────────────────────
+        // ── Date fields: override ExtJS inline 150px width at all levels ─────────
+        '#datefield-1238,#datefield-1239{width:100%!important}' +
         '#datefield-1238-bodyEl,#datefield-1239-bodyEl{width:100%!important}' +
         '#datefield-1238-triggerWrap,#datefield-1239-triggerWrap{width:100%!important}' +
 
@@ -8188,9 +8189,13 @@ var _patchInterval = setInterval(function() {
         // ── Invoice ribbon in exchange view (0.00 to invoice = fully covered) ─────
         '#taskInvoiceRibbon.ribbon-color-success .badge{background:#d6f3e3;color:#1a7a52}' +
 
-        // ── Google Drive attach button ─────────────────────────────────────────────
+        // ── Exchange add button: hidden (not relevant to invoice view) ────────────
+        '#divSaleMult_Exchange_Add_Block{display:none!important}' +
+
+        // ── Google Drive attach button: match width of Attach a file button ────────
         '.GDrive_divAttachFrom{display:block!important;padding:8px 12px 12px;border-top:1px solid #e8eaed}' +
-        '.gdrive-attach-block .btn-area{display:flex;align-items:center;gap:8px}' +
+        '.gdrive-attach-block{width:100%}' +
+        '.gdrive-attach-block .btn-area{display:flex;align-items:center;gap:8px;width:100%}' +
         '.gdrive-attach-block .btn-area img{width:22px;height:22px;object-fit:contain;flex-shrink:0}' +
         '.gdrive-attach-block .btn-area .btn{flex:1;font-size:12px;padding:5px 10px;white-space:nowrap}';
     document.head.appendChild(style);
@@ -8252,7 +8257,7 @@ var _patchInterval = setInterval(function() {
 
         // Sidebar: Fulfillment #1
         var fRibbon = document.getElementById('taskFulfillmentRibbon');
-        if (fRibbon) { fRibbon.className = 'ribbon-color-success'; fRibbon.innerHTML = '<span class="badge">fulfilled</span>'; }
+        if (fRibbon) { fRibbon.className = ''; fRibbon.innerHTML = '<span>fulfilled</span>'; }
         var fContent = document.querySelector('#FulfillmentsBlock .sidebar-content');
         if (fContent) fContent.innerHTML =
             '<div id="FulfillmentPlaceHolder"></div>' +
@@ -8304,7 +8309,7 @@ var _patchInterval = setInterval(function() {
             '<a href="javascript:;"><span class="icons"><i class="icon19-status_invoice dear-green"></i></span>' +
             '<dashed class="selected-text">CR-00014</dashed></a>' +
             '<div class="menu-action"><i class="icon19-arrow_down nav-icon"></i></div>' +
-            '<span class="right"><span class="badge" style="background:#f0f2f4;color:#555">28.69</span></span></span>' +
+            '<span class="right"><span class="badge" style="background:#f0f2f4;color:#555">28.69&nbsp;/&nbsp;28.69</span></span></span>' +
             '<span class="crNoteItemMarker row navigation-item">' +
             '<a href="javascript:;"><span class="icons"><i class="icon19-status_restock dear-green"></i></span>' +
             '<dashed class="selected-text">Restock</dashed></a>' +
