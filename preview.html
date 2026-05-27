@@ -8156,8 +8156,10 @@ var _patchInterval = setInterval(function() {
         // ── Sidebar: exchange back-nav items ──────────────────────────────────────
         '.nav-back-link:hover,.nav-back-link:hover i{color:#25c99f!important}' +
         // Indented context line: aligns text with "Sale Order" text (icon 18px + margin 5px + pad 10px = 33px)
-        '.nav-context-link{padding-left:33px!important;font-size:11px!important;font-weight:400!important;color:#9ca3af!important;line-height:1.4;cursor:pointer}' +
+        '.nav-context-link{padding:4px 10px!important;font-size:13px!important;font-weight:500!important;color:inherit!important;cursor:pointer;border-radius:4px;display:flex!important;align-items:center}' +
         '.nav-context-link:hover{color:#25c99f!important;background:#f8f9fc}' +
+        '.nav-context-link:hover i{color:#25c99f!important}' +
+        '.nav-context-link>i{font-size:18px;margin-right:5px}' +
 
         // ── Sidebar: exchange item selected ───────────────────────────────────────
         '#ExchangesBlock .navigation-selected dashed{font-weight:600}' +
@@ -8471,7 +8473,7 @@ var _patchInterval = setInterval(function() {
             '<li class="nav-back-link" onclick="window._showInvoicePage()">' +
             '<i class="icon19-status_ordered dear-green"></i>Sale Order</li>' +
             '<li class="nav-context-link" onclick="window._showInvoicePage()">' +
-            'Exchange for sales order #SO-12368</li>';
+            '<i class="icon19-status_exchange dear-green"></i>Exchange for sales order #SO-12368</li>';
 
         // Sidebar: NZD
         var currBlock = document.getElementById('SaleMult_Index_Currency_block');
