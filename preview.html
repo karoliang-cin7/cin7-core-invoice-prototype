@@ -8058,31 +8058,69 @@ var _patchInterval = setInterval(function() {
 
         // ── Products grid ──────────────────────────────────────────────────────────
         '#gridpanel-1249{height:auto!important}' +
-        // Restore header: width was 0px inline; height/position/bg/borders come from CSS
         '#headercontainer-1250{width:100%!important}' +
         '#headercontainer-1250-innerCt{width:100%!important}' +
-        // Switch column-header children from absolute→flex so they fill the panel width
         '#headercontainer-1250-targetEl{position:static!important;display:flex!important;align-items:stretch!important}' +
-        '#headercontainer-1250-targetEl>div{position:static!important;flex:1!important;height:60px!important;margin:0!important;width:auto!important;min-width:0}' +
-        '#gridcolumn-1251{flex:4!important}' +   // Product — needs most space
-        '#gridcolumn-1252{flex:2!important}' +   // Comment
-        '#gridcolumn-1253{display:none!important}' + // Unit — already display:none in HTML
+        '#headercontainer-1250-targetEl>div{position:static!important;height:60px!important;margin:0!important;min-width:0!important;overflow:hidden}' +
+        '#headercontainer-1250-targetEl>div:nth-child(1){flex:0 0 4%!important}' +
+        '#headercontainer-1250-targetEl>div:nth-child(2){flex:1 1 22%!important}' +
+        '#headercontainer-1250-targetEl>div:nth-child(3){flex:0 0 8%!important}' +
+        '#headercontainer-1250-targetEl>div:nth-child(4){flex:0 0 6%!important}' +
+        '#headercontainer-1250-targetEl>div:nth-child(5){flex:0 0 6%!important}' +
+        '#headercontainer-1250-targetEl>div:nth-child(6){flex:0 0 8%!important}' +
+        '#headercontainer-1250-targetEl>div:nth-child(7){flex:0 0 5%!important}' +
+        '#headercontainer-1250-targetEl>div:nth-child(8){flex:0 0 10%!important}' +
+        '#headercontainer-1250-targetEl>div:nth-child(9){flex:0 0 7%!important}' +
+        '#headercontainer-1250-targetEl>div:nth-child(10){flex:0 0 10%!important}' +
+        '#headercontainer-1250-targetEl>div:nth-child(11){flex:0 0 10%!important}' +
+        '#headercontainer-1250-targetEl>div:nth-child(12){flex:0 0 4%!important}' +
         '#gridpanel-1249-body{width:100%!important}' +
         '#gridview-1261{width:100%!important}' +
-        '#gridview-1261>table{width:100%!important;table-layout:auto!important}' +
-        '#gridview-1261 tr.x-grid-header-row{display:none}' +
+        '#gridview-1261>table{width:100%!important;table-layout:fixed!important}' +
+        '#gridview-1261 tr.x-grid-header-row>th{height:0!important;padding:0!important;border:0!important;line-height:0!important}' +
+        '#gridview-1261 .x-grid-col-resizer-actionColumn_vSaleInvoiceLinesGrid{width:4%!important}' +
+        '#gridview-1261 .x-grid-col-resizer-gridcolumn-1251{width:22%!important}' +
+        '#gridview-1261 .x-grid-col-resizer-gridcolumn-1252{width:8%!important}' +
+        '#gridview-1261 .x-grid-col-resizer-gridcolumn-1253{width:6%!important}' +
+        '#gridview-1261 .x-grid-col-resizer-gridcolumn-1254{width:6%!important}' +
+        '#gridview-1261 .x-grid-col-resizer-gridcolumn-1255{width:8%!important}' +
+        '#gridview-1261 .x-grid-col-resizer-gridcolumn-1256{width:5%!important}' +
+        '#gridview-1261 .x-grid-col-resizer-gridcolumn-1257{width:10%!important}' +
+        '#gridview-1261 .x-grid-col-resizer-gridcolumn-1258{width:7%!important}' +
+        '#gridview-1261 .x-grid-col-resizer-gridcolumn-1259{width:10%!important}' +
+        '#gridview-1261 .x-grid-col-resizer-gridcolumn-1260{width:10%!important}' +
+        '#gridview-1261 .x-grid-col-resizer-colDelete_InvoiceLines{width:4%!important}' +
 
         // ── Additional charges grid ────────────────────────────────────────────────
         '#gridpanel-1270{height:auto!important}' +
         '#headercontainer-1271{width:100%!important}' +
         '#headercontainer-1271-innerCt{width:100%!important}' +
         '#headercontainer-1271-targetEl{position:static!important;display:flex!important;align-items:stretch!important}' +
-        '#headercontainer-1271-targetEl>div{position:static!important;flex:1!important;height:60px!important;margin:0!important;width:auto!important;min-width:0}' +
-        '#gridcolumn-1272{flex:4!important}' +   // Charges/services — widest
+        '#headercontainer-1271-targetEl>div{position:static!important;height:60px!important;margin:0!important;min-width:0!important;overflow:hidden}' +
+        '#headercontainer-1271-targetEl>div:nth-child(1){flex:0 0 4%!important}' +
+        '#headercontainer-1271-targetEl>div:nth-child(2){flex:1 1 28%!important}' +
+        '#headercontainer-1271-targetEl>div:nth-child(3){flex:0 0 10%!important}' +
+        '#headercontainer-1271-targetEl>div:nth-child(4){flex:0 0 6%!important}' +
+        '#headercontainer-1271-targetEl>div:nth-child(5){flex:0 0 9%!important}' +
+        '#headercontainer-1271-targetEl>div:nth-child(6){flex:0 0 6%!important}' +
+        '#headercontainer-1271-targetEl>div:nth-child(7){flex:0 0 11%!important}' +
+        '#headercontainer-1271-targetEl>div:nth-child(8){flex:0 0 12%!important}' +
+        '#headercontainer-1271-targetEl>div:nth-child(9){flex:0 0 10%!important}' +
+        '#headercontainer-1271-targetEl>div:nth-child(10){flex:0 0 4%!important}' +
         '#gridpanel-1270-body{width:100%!important}' +
         '#gridview-1280{width:100%!important}' +
-        '#gridview-1280>table{width:100%!important;table-layout:auto!important}' +
-        '#gridview-1280 tr.x-grid-header-row{display:none}' +
+        '#gridview-1280>table{width:100%!important;table-layout:fixed!important}' +
+        '#gridview-1280 tr.x-grid-header-row>th{height:0!important;padding:0!important;border:0!important;line-height:0!important}' +
+        '#gridview-1280 .x-grid-col-resizer-actionColumn_vSaleInvoiceAdditionalChargesGrid{width:4%!important}' +
+        '#gridview-1280 .x-grid-col-resizer-gridcolumn-1272{width:28%!important}' +
+        '#gridview-1280 .x-grid-col-resizer-gridcolumn-1273{width:10%!important}' +
+        '#gridview-1280 .x-grid-col-resizer-gridcolumn-1274{width:6%!important}' +
+        '#gridview-1280 .x-grid-col-resizer-gridcolumn-1275{width:9%!important}' +
+        '#gridview-1280 .x-grid-col-resizer-numbercolumn-1276{width:6%!important}' +
+        '#gridview-1280 .x-grid-col-resizer-gridcolumn-1277{width:11%!important}' +
+        '#gridview-1280 .x-grid-col-resizer-gridcolumn-1278{width:12%!important}' +
+        '#gridview-1280 .x-grid-col-resizer-gridcolumn-1279{width:10%!important}' +
+        '#gridview-1280 .x-grid-col-resizer-colDelete_InvoiceAdditionalCharges{width:4%!important}' +
 
         // ── Payments grid (inside divInvoicePaymentBlock) ──────────────────────────
         '#gridpanel-1286{height:auto!important}' +
@@ -8128,9 +8166,9 @@ var _patchInterval = setInterval(function() {
         '#breadcrumb a[onclick]{color:#25c99f!important}' +
         '#breadcrumb a[onclick]:hover{color:#1ba882!important;text-decoration:underline}' +
 
-        // ── Fulfillment select (bs-select without Bootstrap Select JS) ────────────
-        '#SaleMult_Invoice_SelectFulfillmentBlock{position:relative;padding-top:6px}' +
-        '#SaleMult_Invoice_SelectFulfillmentBlock label{position:absolute;top:0;left:7px;padding:0 3px;background:#fff;font-size:11px;color:#707887;z-index:1;white-space:nowrap}' +
+        // ── Fulfillment select — column-reverse so label sits below like date fields ─
+        '#SaleMult_Invoice_SelectFulfillmentBlock{display:flex;flex-direction:column-reverse}' +
+        '#SaleMult_Invoice_SelectFulfillmentBlock label{font-size:11px;color:#707887;padding-top:3px}' +
         '#SaleMult_Invoice_SelectFulfillment{width:100%;height:42px;padding:11px 8px 10px;border:1px solid #b9bdce;border-radius:4px;font-size:13px;font-family:"IBM Plex Sans",sans-serif;color:#3b3b3b;background:#fff;cursor:pointer;box-sizing:border-box;-webkit-appearance:auto}' +
 
         // ── Status wrapper: Draft ─────────────────────────────────────────────────
