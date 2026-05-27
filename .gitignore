@@ -1,2 +1,4 @@
 .DS_Store
 Advanced sale _ Cin7 Core.html
+__pycache__/
+*.pyc
