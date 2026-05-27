@@ -8295,10 +8295,7 @@ var _patchInterval = setInterval(function() {
         var payBlockSide = document.getElementById('PaymentsBlock');
         if (payBlockSide) payBlockSide.classList.remove('hiddenContent');
         var payRibbon = document.getElementById('taskPaymentRibbon');
-        if (payRibbon) {
-            payRibbon.className = '';
-            payRibbon.innerHTML = '<span id="PaidTotal"><span id="PaidTotalValueLabel">paid</span> <span id="PaidTotalValue" class="badge" style="background:#f0f2f4;color:#555">10.95</span></span>';
-        }
+        if (payRibbon) { payRibbon.className = ''; payRibbon.innerHTML = ''; }
         var pContent = document.querySelector('#PaymentsBlock .sidebar-content');
         if (pContent) pContent.innerHTML =
             '<div id="PaymentsPlaceHolder"></div>' +
