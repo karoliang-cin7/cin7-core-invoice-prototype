@@ -8166,10 +8166,18 @@ var _patchInterval = setInterval(function() {
         '#breadcrumb a[onclick]{color:#25c99f!important}' +
         '#breadcrumb a[onclick]:hover{color:#1ba882!important;text-decoration:underline}' +
 
+        // ── Sidebar links: remove browser default blue/underline ─────────────────
+        '.navigation-item a{color:inherit!important;text-decoration:none!important}' +
+
+        // ── Date fields: override ExtJS inline 150px width ────────────────────────
+        '#datefield-1238-bodyEl,#datefield-1239-bodyEl{width:100%!important}' +
+        '#datefield-1238-triggerWrap,#datefield-1239-triggerWrap{width:100%!important}' +
+
         // ── Fulfillment select — column-reverse so label sits below like date fields ─
         '#SaleMult_Invoice_SelectFulfillmentBlock{display:flex;flex-direction:column-reverse}' +
         '#SaleMult_Invoice_SelectFulfillmentBlock label{font-size:11px;color:#707887;padding-top:3px}' +
         '#SaleMult_Invoice_SelectFulfillment{width:100%;height:42px;padding:11px 8px 10px;border:1px solid #b9bdce;border-radius:4px;font-size:13px;font-family:"IBM Plex Sans",sans-serif;color:#3b3b3b;background:#fff;cursor:pointer;box-sizing:border-box;-webkit-appearance:auto}' +
+        '#SaleMult_Invoice_SelectFulfillment option:checked{background:linear-gradient(#fff,#fff)!important;color:#3b3b3b!important}' +
 
         // ── Status wrapper: Draft ─────────────────────────────────────────────────
         '.status-wrapper.default{background:#f0f2f4!important;color:#707887!important}' +
@@ -8280,8 +8288,7 @@ var _patchInterval = setInterval(function() {
         var payRibbon = document.getElementById('taskPaymentRibbon');
         if (payRibbon) {
             payRibbon.className = '';
-            payRibbon.innerHTML = '<span id="PaidTotal"><span id="PaidTotalValueLabel">paid</span> ' +
-                '<span id="PaidTotalValue" class="badge" style="background:#f0f2f4;color:#555">28.69&nbsp;/&nbsp;28.69</span></span>';
+            payRibbon.innerHTML = '<span id="PaidTotal"><span id="PaidTotalValueLabel">No payments</span></span>';
         }
         var pContent = document.querySelector('#PaymentsBlock .sidebar-content');
         if (pContent) pContent.innerHTML =
@@ -8298,7 +8305,7 @@ var _patchInterval = setInterval(function() {
             '<dashed class="selected-text">CR-00014</dashed></a>' +
             '<div class="menu-action"><i class="icon19-arrow_down nav-icon"></i></div>' +
             '<span class="right"><span class="badge" style="background:#f0f2f4;color:#555">28.69</span></span></span>' +
-            '<span class="row navigation-item">' +
+            '<span class="crNoteItemMarker row navigation-item">' +
             '<a href="javascript:;"><span class="icons"><i class="icon19-status_restock dear-green"></i></span>' +
             '<dashed class="selected-text">Restock</dashed></a>' +
             '<div class="menu-action"><i class="icon19-arrow_down nav-icon"></i></div>' +
@@ -8488,7 +8495,7 @@ var _patchInterval = setInterval(function() {
             '<dashed class="selected-text">CR-00015</dashed></a>' +
             '<div class="menu-action"><i class="icon19-arrow_down nav-icon"></i></div>' +
             '<span class="right"><span class="badge" style="background:#f0f2f4;color:#555">28.69&nbsp;/&nbsp;28.69</span></span></span>' +
-            '<span class="row navigation-item">' +
+            '<span class="crNoteItemMarker row navigation-item">' +
             '<a href="javascript:;"><span class="icons"><i class="icon19-status_restock dear-green"></i></span>' +
             '<dashed class="selected-text">Restock</dashed></a>' +
             '<div class="menu-action"><i class="icon19-arrow_down nav-icon"></i></div>' +
