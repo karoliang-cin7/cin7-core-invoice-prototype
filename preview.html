@@ -8301,12 +8301,7 @@ var _patchInterval = setInterval(function() {
         var pContent = document.querySelector('#PaymentsBlock .sidebar-content');
         if (pContent) pContent.innerHTML =
             '<div id="PaymentsPlaceHolder"></div>' +
-            '<span class="payItemMarker row navigation-item" id="payment_pay-001">' +
-            '<a href="javascript:;"><span class="icons"><i class="icon19-money dear-green"></i></span>' +
-            '<dashed class="selected-text">PAY-001</dashed></a>' +
-            '<div class="menu-action"><i class="icon19-arrow_down nav-icon"></i></div>' +
-            '<span class="right"><span class="badge" style="background:#f0f2f4;color:#555">10.95&nbsp;/&nbsp;10.95</span></span>' +
-            '</span>';
+            '<div class="navigation-item payItemMarker" style="color:#aaa;justify-content:center">No payments recorded.</div>';
 
         // Sidebar: C&R
         var crContent = document.querySelector('#CreditNotesBlock .sidebar-content');
@@ -8423,29 +8418,17 @@ var _patchInterval = setInterval(function() {
         set('SaleMult_Invoice_GrandCustomerCurrencyTotalCaption', '(NZD)');
         set('SaleMult_Invoice_GrandTotal',                        '28.69');
 
-        // Payment block: visible, one payment row
+        // Payment block: visible, no rows
         var payBlock = document.getElementById('divInvoicePaymentBlock');
         if (payBlock) payBlock.classList.remove('hiddenContent');
-        var payTbodyInv = clearRows('#gridview-1295 tbody');
-        if (payTbodyInv) payTbodyInv.innerHTML +=
-            '<tr class="x-grid-row ">' +
-            '<td class=" x-grid-cell x-grid-cell-actionColumn_vSalePaymentLinesGrid x-action-col-cell x-grid-cell-first"><div class="x-grid-cell-inner" style="text-align:center"><img alt="" src="' + GIF + '" class="x-action-col-icon x-action-col-0"></div></td>' +
-            '<td class=" x-grid-cell x-grid-cell-gridcolumn-1288"><div class="x-grid-cell-inner" style="text-align:left">100: NZ Bank Account</div></td>' +
-            '<td class=" x-grid-cell x-grid-cell-gridcolumn-1289"><div class="x-grid-cell-inner" style="text-align:left">Payment for INV-12360</div></td>' +
-            '<td class=" x-grid-cell x-grid-cell-datecolumn-1290"><div class="x-grid-cell-inner" style="text-align:left">26/05/2025</div></td>' +
-            '<td class=" x-grid-cell x-grid-cell-gridcolumn-1291"><div class="x-grid-cell-inner" style="text-align:right">10.95</div></td>' +
-            '<td class=" x-grid-cell x-grid-cell-gridcolumn-1292"><div class="x-grid-cell-inner" style="text-align:right">NZD 1.00000</div></td>' +
-            '<td class=" x-grid-cell x-grid-cell-gridcolumn-1293"><div class="x-grid-cell-inner" style="text-align:right">10.95</div></td>' +
-            '<td class=" x-grid-cell x-grid-cell-gridcolumn-1294"><div class="x-grid-cell-inner" style="text-align:left"><span class="badge badge-success" style="padding:2px 6px;font-size:11px">Succeed</span></div></td>' +
-            '<td class="colDelete actionColumn x-grid-cell x-grid-cell-colDelete_InvoicePayments x-grid-cell-last"><div class="x-grid-cell-inner" style="text-align:center"><i class="icon19-close"></i></div></td>' +
-            '</tr>';
+        clearRows('#gridview-1295 tbody');
         clearRows('#gridview-1309 tbody');
         var ccEmpty = document.querySelector('#gridview-1309 .x-grid-empty');
         if (ccEmpty) ccEmpty.style.display = '';
 
         // Balance
         set('SaleMult_Invoice_BalanceHeader', 'Balance due ');
-        set('SaleMult_Invoice_Balance', '(NZD) 17.74');
+        set('SaleMult_Invoice_Balance', '(NZD) 28.69');
         var balTenant = document.getElementById('SaleMult_Invoice_BalanceDueText');
         if (balTenant) balTenant.style.display = 'none';
     }
@@ -8506,9 +8489,20 @@ var _patchInterval = setInterval(function() {
             '<span title="Draft" class="right"><span class="badge" style="background:#f0f2f4;color:#707887">Draft</span></span>' +
             '</span>';
 
-        // Sidebar: Payments — hide entire block (no payments on exchange)
+        // Sidebar: Payments — PAY-001 on exchange
         var payBlockSide = document.getElementById('PaymentsBlock');
-        if (payBlockSide) payBlockSide.classList.add('hiddenContent');
+        if (payBlockSide) payBlockSide.classList.remove('hiddenContent');
+        var payRibbonEx = document.getElementById('taskPaymentRibbon');
+        if (payRibbonEx) { payRibbonEx.className = ''; payRibbonEx.innerHTML = ''; }
+        var pContentEx = document.querySelector('#PaymentsBlock .sidebar-content');
+        if (pContentEx) pContentEx.innerHTML =
+            '<div id="PaymentsPlaceHolder"></div>' +
+            '<span class="payItemMarker row navigation-item" id="payment_pay-001">' +
+            '<a href="javascript:;"><span class="icons"><i class="icon19-money dear-green"></i></span>' +
+            '<dashed class="selected-text">PAY-001</dashed></a>' +
+            '<div class="menu-action"><i class="icon19-arrow_down nav-icon"></i></div>' +
+            '<span class="right"><span class="badge" style="background:#f0f2f4;color:#555">$5.95&nbsp;/&nbsp;$5.95</span></span>' +
+            '</span>';
 
         // Sidebar: C&R → CR-00015
         var crContent = document.querySelector('#CreditNotesBlock .sidebar-content');
@@ -8624,12 +8618,12 @@ var _patchInterval = setInterval(function() {
         if (payTbody) payTbody.innerHTML +=
             '<tr class="x-grid-row ">' +
             '<td class=" x-grid-cell x-grid-cell-actionColumn_vSalePaymentLinesGrid x-action-col-cell x-grid-cell-first"><div class="x-grid-cell-inner" style="text-align:center"><img alt="" src="' + GIF + '" class="x-action-col-icon x-action-col-0"></div></td>' +
-            '<td class=" x-grid-cell x-grid-cell-gridcolumn-1288"><div class="x-grid-cell-inner" style="text-align:left">807: Customer Credits</div></td>' +
-            '<td class=" x-grid-cell x-grid-cell-gridcolumn-1289"><div class="x-grid-cell-inner" style="text-align:left">Payment from Return of Sales order</div></td>' +
+            '<td class=" x-grid-cell x-grid-cell-gridcolumn-1288"><div class="x-grid-cell-inner" style="text-align:left">100: NZ Bank Account</div></td>' +
+            '<td class=" x-grid-cell x-grid-cell-gridcolumn-1289"><div class="x-grid-cell-inner" style="text-align:left">PAY-001</div></td>' +
             '<td class=" x-grid-cell x-grid-cell-datecolumn-1290"><div class="x-grid-cell-inner" style="text-align:left">28/05/2025</div></td>' +
-            '<td class=" x-grid-cell x-grid-cell-gridcolumn-1291"><div class="x-grid-cell-inner" style="text-align:right">10.95</div></td>' +
+            '<td class=" x-grid-cell x-grid-cell-gridcolumn-1291"><div class="x-grid-cell-inner" style="text-align:right">5.95</div></td>' +
             '<td class=" x-grid-cell x-grid-cell-gridcolumn-1292"><div class="x-grid-cell-inner" style="text-align:right">NZD 1.00000</div></td>' +
-            '<td class=" x-grid-cell x-grid-cell-gridcolumn-1293"><div class="x-grid-cell-inner" style="text-align:right">10.95</div></td>' +
+            '<td class=" x-grid-cell x-grid-cell-gridcolumn-1293"><div class="x-grid-cell-inner" style="text-align:right">5.95</div></td>' +
             '<td class=" x-grid-cell x-grid-cell-gridcolumn-1294"><div class="x-grid-cell-inner" style="text-align:left"><span class="badge badge-success" style="padding:2px 6px;font-size:11px">Succeed</span></div></td>' +
             '<td class="colDelete actionColumn x-grid-cell x-grid-cell-colDelete_InvoicePayments x-grid-cell-last"><div class="x-grid-cell-inner" style="text-align:center"><i class="icon19-close"></i></div></td>' +
             '</tr>';
