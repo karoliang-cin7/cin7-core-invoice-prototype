@@ -1,0 +1,27 @@
+﻿
+(function(window){var $$=function(callback){readyBound=false;$$.isReady=false;if(typeof callback=='function'){DOMReadyCallback=callback;}
+bindReady();},document=window.document,readyBound=false,DOMReadyCallback=function(){},DOMContentLoaded;$$.isReady=false;var DOMReady=function(){if(!$$.isReady){if(!document.body){setTimeout(DOMReady,13);return;}
+$$.isReady=true;DOMReadyCallback();}}
+var bindReady=function(){if(readyBound){return;}
+readyBound=true;if(document.readyState==="complete"){DOMReady();}
+if(document.addEventListener){document.addEventListener("DOMContentLoaded",DOMContentLoaded,false);window.addEventListener("load",DOMContentLoaded,false);}else if(document.attachEvent){document.attachEvent("onreadystatechange",DOMContentLoaded);window.attachEvent("onload",DOMContentLoaded);var toplevel=false;try{toplevel=window.frameElement==null;}catch(e){}
+if(document.documentElement.doScroll&&toplevel){doScrollCheck();}}};var doScrollCheck=function(){if($$.isReady){return;}
+try{document.documentElement.doScroll("left");}catch(error){setTimeout(doScrollCheck,1);return;}
+DOMReady();}
+if(document.addEventListener){DOMContentLoaded=function(){document.removeEventListener("DOMContentLoaded",DOMContentLoaded,false);DOMReady();};}else if(document.attachEvent){DOMContentLoaded=function(){if(document.readyState==="complete"){document.detachEvent("onreadystatechange",DOMContentLoaded);DOMReady();}};}
+window.$$=$$;})(window);;window._metronicColorKey='MetronicThemeColorKey';window._themeColorKey='ThemeColorKey';window._leftMenuVisibilityKey='DearLeftMenuVisibilityKey';window._leftMenuCollapsedName='collapsed';window._leftMenuExpandedName='expanded';window._layoutSizeKey='layoutsize';window._adaptClassName='layout-adapt-to-screen';function ThemeSelect_Init(){try{var currentThemeClass='';currentThemeClass=localStorage.getItem(_themeColorKey);if(!(currentThemeClass&&currentThemeClass.length>0)){currentThemeClass='theme-default';localStorage.setItem(_themeColorKey,currentThemeClass);}
+document.body.className+=" ".concat(currentThemeClass);$('.theme-color-item').removeClass('current');$(".theme-color-item[data-style=\"".concat(currentThemeClass,"\"]")).addClass('current');$('body').on('click','.theme-color-item',function(){var color=$(this).data('style');ThemeSelect_setTheme(color);try{var _themeChangedEvent=new Event('theme:updated');window.dispatchEvent(_themeChangedEvent);}catch(error){console.log(error);}});}catch(e){console.log(e);}}
+function ThemeSelect_setTheme(color){$('.theme-color-item').removeClass('current');$(".theme-color-item[data-style=\"".concat(color,"\"]")).addClass('current');var oldColor=localStorage.getItem(_themeColorKey);localStorage.setItem(_themeColorKey,color);$('.current-color').attr('data-style',color);$('body').removeClass(oldColor);$('body').addClass(color);}
+function LeftMenu_Init(){try{var menuVisibility=localStorage.getItem(_leftMenuVisibilityKey);if(!(menuVisibility&&menuVisibility.length>0)){menuVisibility=_leftMenuCollapsedName;}
+if(menuVisibility==_leftMenuCollapsedName){if(!$('body').hasClass('page-sidebar-closed-hide-logo')){$('body').addClass('page-sidebar-closed-hide-logo');}
+if(!$('body').hasClass('page-sidebar-closed')){$('body').addClass('page-sidebar-closed');}
+if(!$('.page-sidebar-menu').hasClass('page-sidebar-menu-closed')){$('.page-sidebar-menu').addClass('page-sidebar-menu-closed');}}else{if($('body').hasClass('page-sidebar-closed-hide-logo')){$('body').removeClass('page-sidebar-closed-hide-logo');}
+if($('body').hasClass('page-sidebar-closed')){$('body').removeClass('page-sidebar-closed');}
+if($('.page-sidebar-menu').hasClass('page-sidebar-menu-closed')){$('.page-sidebar-menu').removeClass('page-sidebar-menu-closed');}}}catch(e){console.log(e);}}
+function LeftMenu_UpdateState(isCollapsed){try{if(isCollapsed==true){localStorage.setItem(_leftMenuVisibilityKey,_leftMenuCollapsedName);}else{localStorage.setItem(_leftMenuVisibilityKey,_leftMenuExpandedName);}}catch(e){console.log(e);}}
+function LayoutSize_changed(type){if(type==='adapt'){$('body').addClass(_adaptClassName);localStorage.setItem(_layoutSizeKey,_adaptClassName);}else{$('body').removeClass(_adaptClassName);localStorage.setItem(_layoutSizeKey,'');}
+setTimeout(function(){$(window).trigger('resize');},100);}
+function LayoutSize_init(){try{var layoutSize=localStorage.getItem(_layoutSizeKey);if(layoutSize&&layoutSize===_adaptClassName){var cbAdapt=document.getElementById('layoutSize_adaptToScreen');if(cbAdapt){cbAdapt.checked=true;}
+document.getElementsByTagName('body')[0].classList.add(_adaptClassName);}else{var cbOriginal=document.getElementById('layoutSize_originalSize');if(cbOriginal){cbOriginal.checked=true;}}}catch(ex){console.log(ex);}}
+function LocalSettings_Init(){ThemeSelect_Init();LeftMenu_Init();LayoutSize_init();}
+$$(LocalSettings_Init);;

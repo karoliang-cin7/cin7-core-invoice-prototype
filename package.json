@@ -1,0 +1,10 @@
+{
+  "name": "cin7-core-invoice-prototype",
+  "version": "1.0.0",
+  "description": "Static HTML prototype of the Cin7 Core Advanced Sale / Invoice page",
+  "private": true,
+  "scripts": {
+    "start": "python3 serve.py",
+    "open": "open http://localhost:8080/preview.html"
+  }
+}

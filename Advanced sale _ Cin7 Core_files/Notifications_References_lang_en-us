@@ -1,0 +1,111 @@
+﻿
+function Notification_Index_OpenReferencesData(messageID){window.CurrentMessageID=messageID;window.CurrentMessageFromPopup=false;const rec=NotificationsStore.getById(window.CurrentMessageID);const referencesJson=rec.get('References');if(referencesJson.indexOf('JSON=')==0){Notification_Index_OpenReferencesJson(referencesJson,true);}
+else if(referencesJson.indexOf('References=')==0){Notification_Index_OpenReferencesHtml(referencesJson,true);}}
+function Notification_Index_OpenReferencesJson(referencesJson,mostTop){const $headerRow=$('#tblReferencesTable thead');referencesJson=referencesJson.replace('JSON=','');const reference=JSON.parse(referencesJson);$headerRow.html(Notification_Index_BuildReferencesHeader(reference.Headers,reference.RecordType));let tableData='';for(let i=0;i<reference.Data.length;i++){tableData+=Notification_Index_BuildReferencesRow(reference.Data[i],reference.Headers,reference.RecordType,reference.IdIndex);}
+Notification_Index_ProcessExportToCsvButton(reference.FileName);$('#tblReferencesTable tbody').html(tableData);$('#divReferencesData').modal('show');if(mostTop===true){if(window.is2019design===true){$('#divReferencesData').addClass('mostTop');$($('#divReferencesData').data('bs.modal').$backdrop).addClass('mostTop');}
+else{$('#divReferencesData').parent().addClass('mostTop');const $backdrop1=$('#divReferencesData').data('modal').$backdrop;$backdrop1.addClass('mostTop');}}
+else if(window.is2019design===true){$('#divReferencesData').removeClass('mostTop');$($('#divReferencesData').data('bs.modal')._backdrop).removeClass('mostTop');}
+else{$('#divReferencesData').parent().removeClass('mostTop');const $backdrop2=$('#divReferencesData').data('modal').$backdrop;$backdrop2.removeClass('mostTop');}}
+function Notification_Index_OpenReferencesHtml(referencesHtml,mostTop){referencesHtml=referencesHtml.replace('References=','');$('#divNotificationRefDetails').html(referencesHtml);$('#divReferencesData_Html').modal('show');if(mostTop===true){if(window.is2019design===true){$('#divReferencesData_Html').addClass('mostTop');$($('#divReferencesData_Html').data('bs.modal').$backdrop).addClass('mostTop');}
+else{$('#divReferencesData_Html').parent().addClass('mostTop');const $backdrop1=$('#divReferencesData_Html').data('modal').$backdrop;$backdrop1.addClass('mostTop');}}
+else if(window.is2019design===true){$('#divReferencesData_Html').removeClass('mostTop');$($('#divReferencesData_Html').data('bs.modal')._backdrop).removeClass('mostTop');}
+else{$('#divReferencesData_Html').parent().removeClass('mostTop');const $backdrop2=$('#divReferencesData_Html').data('modal').$backdrop;$backdrop2.removeClass('mostTop');}}
+function Notification_Index_ExportToCsv(){if(window.CurrentMessageID&&window.CurrentMessageFromPopup===false){const rec=NotificationsStore.getById(window.CurrentMessageID);let referencesJson=rec.get('References');referencesJson=referencesJson.replace('JSON=','').replaceAll('|nr|','; ');document.getElementById('referencesJsonData').value=referencesJson;document.getElementById('frmDownloadReferencesData').submit();}
+else if(window.CurrentMessageID&&window.CurrentMessageFromPopup===true){Notification_Index_ExportToCsvPopup(window.CurrentMessageID);}
+else if(window.CurrentMessageReference&&window.CurrentMessageReference.indexOf('JSON=')>-1){const referencesJson=window.CurrentMessageReference.replace('JSON=','').replaceAll('|nr|','; ');document.getElementById('referencesJsonData').value=referencesJson;document.getElementById('frmDownloadReferencesData').submit();}}
+function Notification_Index_ProcessExportToCsvButton(fileName){switch(fileName){case'SalesProcessingErrors.csv':$('#Notification_Index_ExportToCsvButton').hide();return;default:$('#Notification_Index_ExportToCsvButton').show();return;}}
+function Notification_Index_BuildReferencesRow(data,headers,recordType,idIndex){switch(recordType){case'saletask':return Notification_SaleTask_ReferencesRowBuilder(data,headers,idIndex);case'productdiscount':return Notification_SaleDiscount_ReferencesRowBuilder(data,headers,idIndex);case'saleshipment':return Notification_SaleShipment_ReferencesRowBuilder(data,headers,idIndex);case'customer':return Notification_Customer_ReferencesRowBuilder(data,headers,idIndex);case'product':return Notification_ChangeInPrice_ReferencesRowBuilder(data,headers,idIndex);case'productionOrder_RelatedTasks':return Notification_Production_RelatedTasks_ReferencesRowBuilder(data,headers);case'productionOrder_Operations':return Notification_Production_Operations_ReferencesRowBuilder(data,headers);case'shipstationexportorders':return Notification_ShipStationExportOrders_ReferencesRowBuilder(data,headers);default:return Notification_Index_ReferencesRowBuilder(data);}}
+function Notification_Index_BuildReferencesHeader(headers,recordType){switch(recordType){case'saletask':return Notification_SaleTask_ReferencesHeaderBuilder(headers);case'productdiscount':return Notification_SaleDiscount_ReferencesHeaderBuilder(headers);case'saleshipment':return Notification_SaleShipment_ReferencesHeaderBuilder(headers);case'customer':return Notification_Customer_ReferencesHeaderBuilder(headers);case'product':return Notification_ChangeInPrice_ReferencesHeaderBuilder(headers);case'productionOrder_RelatedTasks':return Notification_Production_RelatedTasks_HeaderBuilder(headers);case'productionOrder_Operations':return Notification_Production_Operations_HeaderBuilder(headers);case'shipstationexportorders':return Notification_ShipStationExportOrders_ReferencesHeaderBuilder(headers);default:return Notification_Index_ReferencesHeaderBuilder(headers);}}
+function Notification_Index_ReferencesHeaderBuilder(headers){let tr='<tr>';for(let i=0;i<headers.length;i++){tr+=`<th>${headers[i]}</th>`;}
+tr+='</tr>';return tr;}
+function Notification_Index_ReferencesRowBuilder(data){let tr='<tr>';for(let i=0;i<data.length;i++){tr+=`<td>${data[i]}</td>`;}
+tr+='</tr>';return tr;};function Notification_SaleTask_ReferencesHeaderBuilder(headers){let tr='<tr>';for(let i=0;i<headers.length;i++){if(headers[i]=='TaskTypeSign'||headers[i]=='TaskID'){continue;}
+if(headers[i]=='SaleOrderNumber'){tr+='<th>Sale order number</th>';}
+if(headers[i]=='SaleOrderDate'){tr+='<th>Sale order date</th>';}}
+tr+='</tr>';return tr;}
+function Notification_SaleTask_ReferencesRowBuilder(data,headers){let tr='';let taskID;let taskTypeSign;for(var i=0;i<data.length;i++){if(headers[i]=='SaleOrderNumber'){saleOrderNumber=data[i];}
+else if(headers[i]=='SaleOrderDate'){saleOrderNumber=data[i];}
+else if(headers[i]=='TaskTypeSign'){taskTypeSign=data[i];}
+else if(headers[i]=='TaskID'){taskID=data[i];}}
+let controller='Sale';if(taskTypeSign==1){controller='SaleMultiple';}
+tr+='<tr>';for(var i=0;i<data.length;i++){if(headers[i]=='TaskTypeSign'||headers[i]=='TaskID'){continue;}
+if(headers[i]=='SaleOrderNumber'){tr+=`<td><a href="/${controller}#${taskID}"target="_blank">${data[i]}</a></td>`;}
+else{tr+=`<td>${data[i]}</td>`;}}
+tr+='</tr>';return tr;};function Notification_SaleShipment_ReferencesHeaderBuilder(headers){let tr='<tr>';for(let i=0;i<headers.length;i++){if(headers[i]=='Carrier'){tr+='<th>Carrier</th>';}
+else if(headers[i]=='TrackingNumber'){tr+='<th>Tracking number</th>';}
+else if(headers[i]=='TrackingUrl'){tr+='<th>Tracking URL</th>';}
+else if(headers[i]=='ShipmentDate'){tr+='<th>Shipment date</th>';}
+else{continue;}}
+tr+='</tr>';return tr;}
+function Notification_SaleShipment_ReferencesRowBuilder(data,headers){let tr='';tr+='<tr>';for(let i=0;i<data.length;i++){if(headers[i]=='Carrier'||headers[i]=='TrackingNumber'||headers[i]=='TrackingUrl'||headers[i]=='ShipmentDate'){tr+=`<td>${data[i]}</td>`;}
+else{continue;}}
+tr+='</tr>';return tr;};function Notification_SaleDiscount_ReferencesHeaderBuilder(headers){let tr='<tr>';for(let i=0;i<headers.length;i++){if(headers[i]=='ProductID'){continue;}
+else{tr+=`<th>${headers[i]}</th>`;}}
+tr+='</tr>';return tr;}
+function Notification_SaleDiscount_ReferencesRowBuilder(data,headers){let tr='';tr+='<tr>';for(let i=0;i<data.length;i++){if(headers[i]!='ProductID'){tr+=`<td>${data[i]}</td>`;}
+else{continue;}}
+tr+='</tr>';return tr;};function Notification_ChangeInPrice_ReferencesHeaderBuilder(headers){let tr='<tr>';const localization={'SKU':'SKU','Name':'Name','Price':'Price','Old Price':'Old price','New Price':'New price','Location':'Location','Product Name':'Product name','Available':'Available','On Order':'On order','Reorder Quantity':'Reorder quantity','Product':'Product','Quantity':'Quantity','Sales':'Sales',};for(let i=0;i<headers.length;i++){if(headers[i]=='Old Price'||headers[i]=='New Price'){tr+=`<th style="text-align: right;">${localization[headers[i]]}</th>`;}
+else{tr+=`<th>${localization[headers[i]]}</th>`;}}
+tr+='</tr>';return tr;}
+function Notification_ChangeInPrice_ReferencesRowBuilder(data,headers){let tr='<tr>';for(let i=0;i<data.length;i++){if(headers[i]=='Old Price'||headers[i]=='New Price'){tr+=`<td align="right">${data[i]}</td>`;}
+else{tr+=`<td>${data[i]}</td>`;}}
+tr+='</tr>';return tr;};function Notification_Customer_ReferencesHeaderBuilder(headers){let tr='<tr>';for(let i=0;i<headers.length;i++){if(headers[i]=='CustomerID'){continue;}
+tr+=`<th>${headers[i]}</th>`;}
+tr+='</tr>';return tr;}
+function Notification_Customer_ReferencesRowBuilder(data,headers){let tr='';let customerID;for(var i=0;i<data.length;i++){if(headers[i]=='CustomerID'){customerID=data[i];}}
+tr+='<tr>';for(var i=0;i<data.length;i++){if(headers[i]=='CustomerID'){continue;}
+if(headers[i]=='Name'){tr+=`<td><a href="/Customer#${customerID}"target="_blank">${data[i]}</a></td>`;}
+else{tr+=`<td>${data[i]||''}</td>`;}}
+tr+='</tr>';return tr;};function Notification_Production_RelatedTasks_HeaderBuilder(headers){let tr='<tr>';for(let i=0;i<headers.length;i++){if(headers[i]=='ProductionOrderID'||headers[i]=='RelatedTaskType'||headers[i]=='RelatedOrderTaskID'){continue;}
+if(headers[i]=='ProductionOrderNumber'){tr+='<th>Production order #</th>';}
+else if(headers[i]=='RelatedOrderNumber'){tr+='<th>Transfer/purchase order #</th>';}
+else if(headers[i]=='LocationFrom'){tr+='<th>Location from</th>';}
+else if(headers[i]=='LocationTo'){tr+='<th>Location to</th>';}
+else if(headers[i]=='Components'){tr+='<th>Components</th>';}}
+tr+='</tr>';return tr;}
+function Notification_Production_RelatedTasks_ReferencesRowBuilder(data,headers){let tr='';let ProductionOrderID,RelatedOrderTaskID,RelatedTaskType;for(var i=0;i<data.length;i++){if(headers[i]=='ProductionOrderID'){ProductionOrderID=data[i];}
+else if(headers[i]=='RelatedOrderTaskID'){RelatedOrderTaskID=data[i];}
+else if(headers[i]=='RelatedTaskType'){RelatedTaskType=data[i];}}
+let relatedTaskController='';if(RelatedTaskType=='Transfer'){relatedTaskController='StockTransfer';}
+else if(RelatedTaskType=='Advanced Purchase'){relatedTaskController='PurchaseAdvanced';}
+else{relatedTaskController='Purchase';}
+tr+='<tr>';for(var i=0;i<data.length;i++){if(headers[i]=='ProductionOrderID'||headers[i]=='RelatedTaskType'||headers[i]=='RelatedOrderTaskID'){continue;}
+if(headers[i]=='ProductionOrderNumber'){tr+=`<td><a href="/ProductionOrder#${ProductionOrderID}"class="mimic_a"target="_blank">${data[i]}</a></td>`;}
+else if(headers[i]=='RelatedOrderNumber'){tr+=`<td><a href="/${relatedTaskController}#${RelatedOrderTaskID}"class="mimic_a"target="_blank">${data[i]}</a></td>`;}
+else if(headers[i]=='Components'){tr+=`<td>${data[i].replaceAll('|nr|','<br/>')}</td>`;}
+else{tr+=`<td>${data[i]}</td>`;}}
+tr+='</tr>';return tr;};function Notification_Production_Operations_HeaderBuilder(headers){let tr='<tr>';for(let i=0;i<headers.length;i++){if(headers[i]=='ProductionOrderID'||headers[i]=='ProductID'){continue;}
+if(headers[i]=='ProductionRunNumber'){tr+='<th>Production order/run #</th>';}
+else if(headers[i]=='ProductionOrderNumber'){tr+='<th>Production order #</th>';}
+else if(headers[i]=='OperationName'){tr+='<th>Operation name</th>';}
+else if(headers[i]=='DowntimeType'){tr+='<th>Downtime type</th>';}
+else if(headers[i]=='Reason'){tr+='<th>Reason</th>';}
+else if(headers[i]=='Downtime'){tr+='<th>Downtime</th>';}
+else if(headers[i]=='LocationName'){tr+='<th>Location name</th>';}
+else if(headers[i]=='Components'){tr+='<th>Components</th>';}
+else if(headers[i]=='ProductName'){tr+='<th>Product</th>';}
+else if(headers[i]=='Available'){tr+='<th>Available</th>';}
+else if(headers[i]=='Total'){tr+='<th>Total</th>';}
+else if(headers[i]=='SaleOrderNumber'){tr+='<th>Sale #</th>';}
+else if(headers[i]=='CustomerName'){tr+='<th>Customer</th>';}
+else if(headers[i]=='Version'){tr+='<th>BOM version</th>';}}
+tr+='</tr>';return tr;}
+function Notification_Production_Operations_ReferencesRowBuilder(data,headers){let tr='';let ProductionOrderID,ProductID;for(var i=0;i<data.length;i++){if(headers[i]=='ProductionOrderID'){ProductionOrderID=data[i];}
+else if(headers[i]=='ProductID'){ProductID=data[i];}}
+tr+='<tr>';for(var i=0;i<data.length;i++){if(headers[i]=='ProductionOrderID'||headers[i]=='ProductID'){continue;}
+if(headers[i]=='ProductionRunNumber'||headers[i]=='ProductionOrderNumber'){tr+=`<td><a href="/ProductionOrder#${ProductionOrderID}"class="mimic_a"target="_blank">${data[i]}</a></td>`;}
+else if(headers[i]=='Components'){tr+=`<td>${data[i].replaceAll('|nr|','<br/>')}</td>`;}
+else if(headers[i]=='ProductName'&&ProductID!=null){tr+=`<td><a href="/Product#${ProductID}"class="mimic_a"target="_blank">${data[i]}</a></td>`;}
+else{tr+=`<td>${data[i]}</td>`;}}
+tr+='</tr>';return tr;};function Notification_ShipStationExportOrders_ReferencesHeaderBuilder(headers){let tr='<tr>';for(let i=0;i<headers.length;i++){if(headers[i]=='SaleRef'||headers[i]=='InvoiceRef'||headers[i]=='FulfillmentRef'){continue;}
+tr+=`<th>${headers[i]}</th>`;}
+tr+='</tr>';return tr;}
+function Notification_ShipStationExportOrders_ReferencesRowBuilder(data,headers){let tr='';let saleRef;let invoiceRef;let ffRef;for(var i=0;i<data.length;i++){if(headers[i]=='SaleRef'){saleRef=data[i];}
+else if(headers[i]=='InvoiceRef'){invoiceRef=data[i];}
+else if(headers[i]=='FulfillmentRef'){ffRef=data[i];}}
+tr+='<tr>';for(var i=0;i<data.length;i++){if(headers[i]=='SaleRef'||headers[i]=='InvoiceRef'||headers[i]=='FulfillmentRef'){continue;}
+if(headers[i]=='SO#'&&saleRef){tr+=`<td><a href="${saleRef}"target="_blank">${data[i]}</a></td>`;}
+else if(headers[i]=='Invoice#'&&invoiceRef){tr+=`<td><a href="${invoiceRef}"target="_blank">${data[i]}</a></td>`;}
+else if(headers[i]=='Fulfillment#'&&ffRef){tr+=`<td><a href="${ffRef}"target="_blank">${data[i]}</a></td>`;}
+else{tr+=`<td>${data[i]}</td>`;}}
+tr+='</tr>';return tr;};
