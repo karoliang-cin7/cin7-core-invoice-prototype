@@ -149,8 +149,8 @@
 
 <div class="accounting-system xero">
         <div class="form-control">
-            <button class="btn btn-outline dropdown-toggle padding-left-0 disconnected" id="syncMenuItem" data-toggle="dropdown" title="CODEJeDIS_XERO">
-                <span id="fSyncStatus"><img src="./Advanced sale _ Cin7 Core_files/xero_logo.png" alt="Xero"><span class="xero-org-name" style="color:#ed7674">Not connected</span></span>
+            <button class="btn btn-outline dropdown-toggle padding-left-0 sync-connected" id="syncMenuItem" data-toggle="dropdown" title="CODEJeDIS_XERO">
+                <span id="fSyncStatus"><img src="./Advanced sale _ Cin7 Core_files/xero_logo.png" alt="Xero"><span class="xero-org-name sync-status-connected">Connected</span></span>
             </button>
             <div class="dropdown-menu align-left accounting-system-dropdown">
                 <div class="level2" id="SyncState"></div>
@@ -8025,6 +8025,21 @@ var _patchInterval = setInterval(function() {
         clearInterval(_patchInterval);
     }
 }, 50);
+
+function applySyncConnectedState() {
+    var syncBtn = document.getElementById('syncMenuItem');
+    var fSync = document.getElementById('fSyncStatus');
+    if (!syncBtn || !fSync) return;
+    syncBtn.classList.remove('disconnected');
+    syncBtn.classList.add('sync-connected');
+    var label = fSync.querySelector('.sync-status-connected, .xero-org-name');
+    if (!label || label.textContent !== 'Connected') {
+        fSync.innerHTML = '<img src="./Advanced sale _ Cin7 Core_files/xero_logo.png" alt="Xero"><span class="xero-org-name sync-status-connected">Connected</span>';
+    }
+}
+applySyncConnectedState();
+var _syncPatchInterval = setInterval(applySyncConnectedState, 200);
+setTimeout(function() { clearInterval(_syncPatchInterval); }, 8000);
 </script>
 
 <script>
@@ -8037,6 +8052,8 @@ var _patchInterval = setInterval(function() {
         '.dear-green{color:#25c99f!important}' +
         '.ribbon-color-success{color:#1a7a52}' +
         '.ribbon-color-success .badge{background-color:#d6f3e3;color:#1a7a52}' +
+        '#syncMenuItem.sync-connected{background-color:#d6f3e3!important;border-color:#b8e6cf!important}' +
+        '#syncMenuItem.sync-connected .sync-status-connected{color:#1a7a52!important}' +
 
         // ── Products grid ──────────────────────────────────────────────────────────
         '#gridpanel-1249{height:auto!important}' +
@@ -8109,11 +8126,29 @@ var _patchInterval = setInterval(function() {
         '#headercontainer-1287{width:100%!important}' +
         '#headercontainer-1287-innerCt{width:100%!important}' +
         '#headercontainer-1287-targetEl{position:static!important;display:flex!important;align-items:stretch!important}' +
-        '#headercontainer-1287-targetEl>div{position:static!important;flex:1!important;height:60px!important;margin:0!important;width:auto!important;min-width:0}' +
+        '#headercontainer-1287-targetEl>div{position:static!important;height:60px!important;margin:0!important;min-width:0!important;overflow:hidden}' +
+        '#headercontainer-1287-targetEl>div:nth-child(1){flex:0 0 5%!important}' +
+        '#headercontainer-1287-targetEl>div:nth-child(2){flex:0 0 25%!important}' +
+        '#headercontainer-1287-targetEl>div:nth-child(3){flex:0 0 14%!important}' +
+        '#headercontainer-1287-targetEl>div:nth-child(4){flex:0 0 11%!important}' +
+        '#headercontainer-1287-targetEl>div:nth-child(5){flex:0 0 9%!important}' +
+        '#headercontainer-1287-targetEl>div:nth-child(6){flex:0 0 12%!important}' +
+        '#headercontainer-1287-targetEl>div:nth-child(7){flex:0 0 8%!important}' +
+        '#headercontainer-1287-targetEl>div:nth-child(8){flex:0 0 11%!important}' +
+        '#headercontainer-1287-targetEl>div:nth-child(9){flex:0 0 5%!important}' +
         '#gridpanel-1286-body{width:100%!important;height:auto!important}' +
         '#gridview-1295{width:100%!important;height:auto!important;overflow:visible!important}' +
-        '#gridview-1295>table{width:100%!important;table-layout:auto!important}' +
-        '#gridview-1295 tr.x-grid-header-row{display:none}' +
+        '#gridview-1295>table{width:100%!important;table-layout:fixed!important}' +
+        '#gridview-1295 tr.x-grid-header-row>th{height:0!important;padding:0!important;border:0!important;line-height:0!important}' +
+        '#gridview-1295 .x-grid-col-resizer-actionColumn_vSalePaymentLinesGrid{width:5%!important}' +
+        '#gridview-1295 .x-grid-col-resizer-gridcolumn-1288{width:25%!important}' +
+        '#gridview-1295 .x-grid-col-resizer-gridcolumn-1289{width:14%!important}' +
+        '#gridview-1295 .x-grid-col-resizer-datecolumn-1290{width:11%!important}' +
+        '#gridview-1295 .x-grid-col-resizer-gridcolumn-1291{width:9%!important}' +
+        '#gridview-1295 .x-grid-col-resizer-gridcolumn-1292{width:12%!important}' +
+        '#gridview-1295 .x-grid-col-resizer-gridcolumn-1293{width:8%!important}' +
+        '#gridview-1295 .x-grid-col-resizer-gridcolumn-1294{width:11%!important}' +
+        '#gridview-1295 .x-grid-col-resizer-colDelete_InvoicePayments{width:5%!important}' +
 
         // ── Customer credit grid ───────────────────────────────────────────────────
         '#gridpanel-1301{height:auto!important}' +
@@ -8225,6 +8260,7 @@ var _patchInterval = setInterval(function() {
 
         // Sidebar: header
         set('formCaption2', '#SO-12368');
+        set('formCaption', 'Sale #SO-12368 for Ayumu Hirano');
         ['SaleMult_Index_Status','SaleMult_Index_Status_Header'].forEach(function(id) {
             var el = document.getElementById(id);
             if (el) { el.className = 'status-wrapper ordered'; el.textContent = 'Ordered'; }
@@ -8275,24 +8311,33 @@ var _patchInterval = setInterval(function() {
             '<span title="Paid" class="right"><span class="badge" style="background:#f0f2f4;color:#555">28.69&nbsp;/&nbsp;28.69</span></span>' +
             '</span>';
 
-        // Sidebar: Payments
+        // Sidebar: Payments — invoice paid + credit note credited (net zero)
         var payBlockSide = document.getElementById('PaymentsBlock');
         if (payBlockSide) payBlockSide.classList.remove('hiddenContent');
         var payRibbon = document.getElementById('taskPaymentRibbon');
-        if (payRibbon) { payRibbon.className = ''; payRibbon.innerHTML = ''; }
+        if (payRibbon) payRibbon.className = 'ribbon-color-success';
+        var paidLabel = document.getElementById('PaidTotalValueLabel');
+        if (paidLabel) paidLabel.classList.add('hiddenContent');
+        var paidValue = document.getElementById('PaidTotalValue');
+        if (paidValue) paidValue.textContent = 'Paid / credited';
         var pContent = document.querySelector('#PaymentsBlock .sidebar-content');
         if (pContent) pContent.innerHTML =
             '<div id="PaymentsPlaceHolder"></div>' +
-            '<div class="navigation-item payItemMarker" style="color:#aaa;justify-content:center">No payments recorded.</div>';
+            '<div class="navigation-item payItemMarker">' +
+            '<a href="javascript:;"><dashed>INV-12360</dashed></a>' +
+            '<span class="badge right">28.69</span></div>' +
+            '<div class="navigation-item payItemMarker">' +
+            '<a href="javascript:;"><dashed>CR-12360</dashed></a>' +
+            '<span class="badge right">28.69</span></div>';
 
         // Sidebar: C&R
         var crContent = document.querySelector('#CreditNotesBlock .sidebar-content');
         if (crContent) crContent.innerHTML =
             '<div id="CreditNotePlaceHolder"></div>' +
             '<div style="padding:5px 12px 3px;font-size:10px;color:#888;font-weight:600;text-transform:uppercase;letter-spacing:.5px">Credit note &amp; restock #1</div>' +
-            '<span class="crNoteItemMarker row navigation-item" id="creditnote_CR-00014">' +
+            '<span class="crNoteItemMarker row navigation-item" id="creditnote_CR-12360">' +
             '<a href="javascript:;"><span class="icons"><i class="icon19-status_invoice dear-green"></i></span>' +
-            '<dashed class="selected-text">CR-00014</dashed></a>' +
+            '<dashed class="selected-text">CR-12360</dashed></a>' +
             '<div class="menu-action"><i class="icon19-arrow_down nav-icon"></i></div>' +
             '<span class="right"><span class="badge" style="background:#f0f2f4;color:#555">28.69&nbsp;/&nbsp;28.69</span></span></span>' +
             '<span class="crNoteItemMarker row navigation-item">' +
@@ -8345,7 +8390,7 @@ var _patchInterval = setInterval(function() {
         if (prodTbody) prodTbody.innerHTML +=
             '<tr class="x-grid-row ">' +
             '<td class=" x-grid-cell x-grid-cell-actionColumn_vSaleInvoiceLinesGrid x-action-col-cell x-grid-cell-first"><div class="x-grid-cell-inner" style="text-align:center"><img alt="" src="' + GIF + '" class="x-action-col-icon x-action-col-0"></div></td>' +
-            '<td class=" x-grid-cell x-grid-cell-gridcolumn-1251 colImage"><div class="x-grid-cell-inner" style="text-align:left"><div class="product-item"><div class="product-img"><img src="./Advanced sale _ Cin7 Core_files/product-ski-beanie.jpg" alt="Ski Beanie - Blue"></div><div class="product-text"><span>ski-beanie-blue: Ski Beanie - Blue</span></div></div></div></td>' +
+            '<td class=" x-grid-cell x-grid-cell-gridcolumn-1251 colImage"><div class="x-grid-cell-inner" style="text-align:left"><div class="product-item"><div class="product-img"><img src="./Advanced sale _ Cin7 Core_files/product-ski-beanie.jpg" alt="Ski beanie - Black"></div><div class="product-text"><span>ski-beanie-black: Ski beanie - Black</span></div></div></div></td>' +
             '<td class=" x-grid-cell x-grid-cell-gridcolumn-1252"><div class="x-grid-cell-inner" style="text-align:left">&nbsp;</div></td>' +
             '<td class=" x-grid-cell x-grid-cell-gridcolumn-1253"><div class="x-grid-cell-inner" style="text-align:left">Item</div></td>' +
             '<td class=" x-grid-cell x-grid-cell-gridcolumn-1254"><div class="x-grid-cell-inner" style="text-align:right">1</div></td>' +
@@ -8400,17 +8445,30 @@ var _patchInterval = setInterval(function() {
         set('SaleMult_Invoice_GrandCustomerCurrencyTotalCaption', '(NZD)');
         set('SaleMult_Invoice_GrandTotal',                        '28.69');
 
-        // Payment block: visible, no rows
+        // Payment block: visible with cash payment row
         var payBlock = document.getElementById('divInvoicePaymentBlock');
         if (payBlock) payBlock.classList.remove('hiddenContent');
-        clearRows('#gridview-1295 tbody');
+        var payTbody = clearRows('#gridview-1295 tbody');
+        if (payTbody) payTbody.innerHTML +=
+            '<tr class="x-grid-row ">' +
+            '<td class=" x-grid-cell x-grid-cell-actionColumn_vSalePaymentLinesGrid x-action-col-cell x-grid-cell-first"><div class="x-grid-cell-inner" style="text-align:center"><img alt="" src="' + GIF + '" class="x-action-col-icon x-action-col-0"></div></td>' +
+            '<td class=" x-grid-cell x-grid-cell-gridcolumn-1288"><div class="x-grid-cell-inner" style="text-align:left">701: Cash in/out</div></td>' +
+            '<td class=" x-grid-cell x-grid-cell-gridcolumn-1289"><div class="x-grid-cell-inner" style="text-align:left">8960417595623</div></td>' +
+            '<td class=" x-grid-cell x-grid-cell-datecolumn-1290"><div class="x-grid-cell-inner" style="text-align:left">26/05/2025</div></td>' +
+            '<td class=" x-grid-cell x-grid-cell-gridcolumn-1291"><div class="x-grid-cell-inner" style="text-align:right">28.69</div></td>' +
+            '<td class=" x-grid-cell x-grid-cell-gridcolumn-1292"><div class="x-grid-cell-inner" style="text-align:right">&nbsp;</div></td>' +
+            '<td class=" x-grid-cell x-grid-cell-gridcolumn-1293"><div class="x-grid-cell-inner" style="text-align:right">&nbsp;</div></td>' +
+            '<td class=" x-grid-cell x-grid-cell-gridcolumn-1293"><div class="x-grid-cell-inner" style="text-align:right">&nbsp;</div></td>' +
+            '<td class=" x-grid-cell x-grid-cell-gridcolumn-1294"><div class="x-grid-cell-inner" style="text-align:left"><span class="badge badge-success" style="padding:2px 6px;font-size:11px">Succeed</span></div></td>' +
+            '<td class="colDelete actionColumn x-grid-cell x-grid-cell-colDelete_InvoicePayments x-grid-cell-last"><div class="x-grid-cell-inner" style="text-align:center"><i class="icon19-close"></i></div></td>' +
+            '</tr>';
         clearRows('#gridview-1309 tbody');
         var ccEmpty = document.querySelector('#gridview-1309 .x-grid-empty');
         if (ccEmpty) ccEmpty.style.display = '';
 
         // Balance
         set('SaleMult_Invoice_BalanceHeader', 'Balance due ');
-        set('SaleMult_Invoice_Balance', '(NZD) 28.69');
+        set('SaleMult_Invoice_Balance', '(NZD) 0.00');
         var balTenant = document.getElementById('SaleMult_Invoice_BalanceDueText');
         if (balTenant) balTenant.style.display = 'none';
     }
@@ -8427,6 +8485,7 @@ var _patchInterval = setInterval(function() {
 
         // Sidebar: header
         set('formCaption2', '#EX-12368-1');
+        set('formCaption', 'Exchange Sale #EX-12368-1 for Ayumu Hirano');
         ['SaleMult_Index_Status','SaleMult_Index_Status_Header'].forEach(function(id) {
             var el = document.getElementById(id);
             if (el) { el.className = 'status-wrapper ordered'; el.textContent = 'Ordered'; }
@@ -8445,21 +8504,30 @@ var _patchInterval = setInterval(function() {
         if (currBlock) currBlock.classList.remove('hiddenContent');
         set('SaleMult_Index_CurrencyLabel', 'NZD');
 
-        // Sidebar: Fulfillment — empty for draft exchange
+        // Sidebar: Fulfillment — #1 to pick
         var fRibbon = document.getElementById('taskFulfillmentRibbon');
-        if (fRibbon) { fRibbon.className = ''; fRibbon.innerHTML = ''; }
+        if (fRibbon) {
+            fRibbon.className = '';
+            fRibbon.innerHTML = '<span id="FulfillmentRemainingValue" class="badge">1</span> <span>to pick</span>';
+        }
+        var fFooter = document.getElementById('divSaleMult_FulFillment_Add');
+        if (fFooter) fFooter.classList.remove('hiddenContent');
         var fContent = document.querySelector('#FulfillmentsBlock .sidebar-content');
         if (fContent) fContent.innerHTML =
             '<div id="FulfillmentPlaceHolder"></div>' +
-            '<div class="ffItemMarker ffItem"><i class="icon19-add" aria-hidden="true"></i>' +
-            ' Start fulfillment to pick products you want to ship.</div>';
+            '<div class="row navigation-item ffItemMarker">' +
+            '<span class="ffItem_number" style="width:15px">' +
+            '<span class="icons"><span class="ffnumber">#1</span></span></span>' +
+            '<span class="ffItem">' +
+            '<a href="javascript:;">' +
+            '<i class="icon19-not-status_pick dear-orange selected-text"></i>' +
+            '<dashed class="selected-text">Pick</dashed></a></span>' +
+            '<div class="menu-action fulfillmentAction"><i class="icon19-arrow_down nav-icon"></i></div>' +
+            '</div>';
 
-        // Sidebar: Invoices → INV-12361 Draft, 0.00 remaining (customer credit covers it)
+        // Sidebar: Invoices → INV-12361 with amount badge
         var invRibbon = document.getElementById('taskInvoiceRibbon');
-        if (invRibbon) {
-            invRibbon.className = 'ribbon-color-success';
-            invRibbon.innerHTML = '<span id="InvoiceRemainingValue" class="badge">0.00</span> <span>to invoice</span>';
-        }
+        if (invRibbon) invRibbon.className = 'hiddenContent';
         var invContent = document.querySelector('#InvoicesBlock .sidebar-content');
         if (invContent) invContent.innerHTML =
             '<div id="InvoicesPlaceHolder"></div>' +
@@ -8468,23 +8536,27 @@ var _patchInterval = setInterval(function() {
             '<span class="icons"><i class="icon19-status_invoice navigation-selected-hidden dear-green"></i></span>' +
             '<dashed class="selected-text">INV-12361</dashed></a>' +
             '<div class="menu-action invoiceAction"><i class="icon19-arrow_down nav-icon"></i></div>' +
-            '<span title="Draft" class="right"><span class="badge" style="background:#f0f2f4;color:#707887">Draft</span></span>' +
+            '<span class="right"><span class="badge badge-success">10.95</span></span>' +
             '</span>';
 
-        // Sidebar: Payments — PAY-001 on exchange
+        // Sidebar: Payments — paid / credited with invoice + credit note rows
         var payBlockSide = document.getElementById('PaymentsBlock');
         if (payBlockSide) payBlockSide.classList.remove('hiddenContent');
         var payRibbonEx = document.getElementById('taskPaymentRibbon');
-        if (payRibbonEx) { payRibbonEx.className = ''; payRibbonEx.innerHTML = ''; }
+        if (payRibbonEx) payRibbonEx.className = 'ribbon-color-success';
+        var paidLabelEx = document.getElementById('PaidTotalValueLabel');
+        if (paidLabelEx) paidLabelEx.classList.add('hiddenContent');
+        var paidValueEx = document.getElementById('PaidTotalValue');
+        if (paidValueEx) paidValueEx.textContent = 'Paid / credited';
         var pContentEx = document.querySelector('#PaymentsBlock .sidebar-content');
         if (pContentEx) pContentEx.innerHTML =
             '<div id="PaymentsPlaceHolder"></div>' +
-            '<span class="payItemMarker row navigation-item" id="payment_pay-001">' +
-            '<a href="javascript:;"><span class="icons"><i class="icon19-money dear-green"></i></span>' +
-            '<dashed class="selected-text">PAY-001</dashed></a>' +
-            '<div class="menu-action"><i class="icon19-arrow_down nav-icon"></i></div>' +
-            '<span class="right"><span class="badge" style="background:#f0f2f4;color:#555">$5.95&nbsp;/&nbsp;$5.95</span></span>' +
-            '</span>';
+            '<div class="navigation-item payItemMarker">' +
+            '<a href="javascript:;"><dashed>INV-12361</dashed></a>' +
+            '<span class="badge right">10.95</span></div>' +
+            '<div class="navigation-item payItemMarker">' +
+            '<a href="javascript:;"><dashed>CR-00076</dashed></a>' +
+            '<span class="badge right">10.95</span></div>';
 
         // Sidebar: C&R → CR-00015
         var crContent = document.querySelector('#CreditNotesBlock .sidebar-content');
@@ -8495,7 +8567,7 @@ var _patchInterval = setInterval(function() {
             '<a href="javascript:;"><span class="icons"><i class="icon19-status_invoice dear-green"></i></span>' +
             '<dashed class="selected-text">CR-00015</dashed></a>' +
             '<div class="menu-action"><i class="icon19-arrow_down nav-icon"></i></div>' +
-            '<span class="right"><span class="badge" style="background:#f0f2f4;color:#555">28.69&nbsp;/&nbsp;28.69</span></span></span>' +
+            '<span class="right"><span class="badge" style="background:#f0f2f4;color:#555">10.95&nbsp;/&nbsp;10.95</span></span></span>' +
             '<span class="crNoteItemMarker row navigation-item">' +
             '<a href="javascript:;"><span class="icons"><i class="icon19-status_restock dear-green"></i></span>' +
             '<dashed class="selected-text">Restock</dashed></a>' +
@@ -8544,7 +8616,7 @@ var _patchInterval = setInterval(function() {
         if (prodTbody) prodTbody.innerHTML +=
             '<tr class="x-grid-row ">' +
             '<td class=" x-grid-cell x-grid-cell-actionColumn_vSaleInvoiceLinesGrid x-action-col-cell x-grid-cell-first"><div class="x-grid-cell-inner" style="text-align:center"><img alt="" src="' + GIF + '" class="x-action-col-icon x-action-col-0"></div></td>' +
-            '<td class=" x-grid-cell x-grid-cell-gridcolumn-1251 colImage"><div class="x-grid-cell-inner" style="text-align:left"><div class="product-item"><div class="product-img"><img src="./Advanced sale _ Cin7 Core_files/product-ski-beanie.jpg" alt="Ski Beanie - Blue"></div><div class="product-text"><span>ski-beanie-blue: Ski Beanie - Blue</span></div></div></div></td>' +
+            '<td class=" x-grid-cell x-grid-cell-gridcolumn-1251 colImage"><div class="x-grid-cell-inner" style="text-align:left"><div class="product-item"><div class="product-img"><img src="./Advanced sale _ Cin7 Core_files/product-ski-beanie-blue.jpg" alt="Ski Beanie - Blue"></div><div class="product-text"><span>ski-beanie-blue: Ski Beanie - Blue</span></div></div></div></td>' +
             '<td class=" x-grid-cell x-grid-cell-gridcolumn-1252"><div class="x-grid-cell-inner">&nbsp;</div></td>' +
             '<td class=" x-grid-cell x-grid-cell-gridcolumn-1253"><div class="x-grid-cell-inner" style="text-align:left">Item</div></td>' +
             '<td class=" x-grid-cell x-grid-cell-gridcolumn-1254"><div class="x-grid-cell-inner" style="text-align:right">1</div></td>' +
@@ -8600,13 +8672,14 @@ var _patchInterval = setInterval(function() {
         if (payTbody) payTbody.innerHTML +=
             '<tr class="x-grid-row ">' +
             '<td class=" x-grid-cell x-grid-cell-actionColumn_vSalePaymentLinesGrid x-action-col-cell x-grid-cell-first"><div class="x-grid-cell-inner" style="text-align:center"><img alt="" src="' + GIF + '" class="x-action-col-icon x-action-col-0"></div></td>' +
-            '<td class=" x-grid-cell x-grid-cell-gridcolumn-1288"><div class="x-grid-cell-inner" style="text-align:left">100: NZ Bank Account</div></td>' +
+            '<td class=" x-grid-cell x-grid-cell-gridcolumn-1288"><div class="x-grid-cell-inner" style="text-align:left">101: Credit from Refund</div></td>' +
             '<td class=" x-grid-cell x-grid-cell-gridcolumn-1289"><div class="x-grid-cell-inner" style="text-align:left">PAY-001</div></td>' +
             '<td class=" x-grid-cell x-grid-cell-datecolumn-1290"><div class="x-grid-cell-inner" style="text-align:left">28/05/2025</div></td>' +
-            '<td class=" x-grid-cell x-grid-cell-gridcolumn-1291"><div class="x-grid-cell-inner" style="text-align:right">5.95</div></td>' +
+            '<td class=" x-grid-cell x-grid-cell-gridcolumn-1291"><div class="x-grid-cell-inner" style="text-align:right">10.95</div></td>' +
             '<td class=" x-grid-cell x-grid-cell-gridcolumn-1292"><div class="x-grid-cell-inner" style="text-align:right">NZD 1.00000</div></td>' +
-            '<td class=" x-grid-cell x-grid-cell-gridcolumn-1293"><div class="x-grid-cell-inner" style="text-align:right">5.95</div></td>' +
-            '<td class=" x-grid-cell x-grid-cell-gridcolumn-1294"><div class="x-grid-cell-inner" style="text-align:left"><span class="badge badge-success" style="padding:2px 6px;font-size:11px">Succeed</span></div></td>' +
+            '<td class=" x-grid-cell x-grid-cell-gridcolumn-1293"><div class="x-grid-cell-inner" style="text-align:right">10.95</div></td>' +
+            '<td class=" x-grid-cell x-grid-cell-gridcolumn-1293"><div class="x-grid-cell-inner" style="text-align:right"></div></td>' +
+            '<td class=" x-grid-cell x-grid-cell-gridcolumn-1294"><div class="x-grid-cell-inner" style="text-align:left"><span class="badge badge-success" style="padding:2px 0px;font-size:11px">Succeed</span></div></td>' +
             '<td class="colDelete actionColumn x-grid-cell x-grid-cell-colDelete_InvoicePayments x-grid-cell-last"><div class="x-grid-cell-inner" style="text-align:center"><i class="icon19-close"></i></div></td>' +
             '</tr>';
 
